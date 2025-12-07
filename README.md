@@ -25,7 +25,7 @@
 
 ### ■ クラス図
 
-![docs/fig/class_diagram.svg](クラス図)
+![クラス図](./docs/fig/class_diagram.svg)
 
 | パッケージ | クラス名 | 役割 |
 | --------- | ------- | ---- |
