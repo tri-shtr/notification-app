@@ -1,0 +1,20 @@
+@startuml sequence_diagram
+actor User
+participant Main
+participant NotificationService
+participant NotificationFactory
+participant EmailNotification
+participant NotificationHistoryRepository
+
+User -> Main: create NotificationRequest (EmailRecipient, message, EMAIL)
+Main -> NotificationService: send(request)
+NotificationService -> NotificationFactory: create(EMAIL)
+NotificationFactory --> NotificationService: EmailNotification instance
+NotificationService -> EmailNotification: send(request)
+EmailNotification -> Main: <<console>> System.out.println("Send Email to: user@example.com - body: ...")
+EmailNotification -> NotificationHistoryRepository: add(history)
+NotificationHistoryRepository --> EmailNotification: ack
+EmailNotification --> NotificationService: return NotificationHistory
+NotificationService --> Main: return NotificationHistory
+Main -> User: print result
+@enduml

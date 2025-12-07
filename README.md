@@ -25,6 +25,28 @@
 
 ### ■ クラス図
 
+![docs/fig/class_diagram.svg](クラス図)
+
+| パッケージ | クラス名 | 役割 |
+| --------- | ------- | ---- |
+| com.example.notificationapp.notification | Notification | 通知処理の共通インターフェース |
+| com.example.notificationapp.notification | AbstractNotification | 各種通知処理の共通処理を持つ抽象クラス |
+| com.example.notificationapp.notification | EmailNotification | 通知処理（メール） |
+| com.example.notificationapp.notification | SmsNotification | 通知処理（SMS） |
+| com.example.notificationapp.notification | InAppNotification | 通知処理（アプリ通知） |
+| com.example.notificationapp.model | NotificationRequest | 通知内容（宛先、内容）を保持するDTO |
+| com.example.notificationapp.model | Recipient | 各種通知処理の宛先を表すスーパークラス |
+| com.example.notificationapp.model | EmailRecipient | メール通知処理の宛先を表すクラス |
+| com.example.notificationapp.model | SmsRecipient | SMS通知処理の宛先を表すクラス |
+| com.example.notificationapp.model | AppUserRecipient | アプリ通知処理の宛先を表すクラス |
+| com.example.notificationapp.model | NotificationChannel | 通知処理方式の列挙型 |
+| com.example.notificationapp.model | NotificationStatus | 通知処理結果の列挙型 |
+| com.example.notificationapp.model | NotificationHistory | 通知履歴を保持するDTO |
+| com.example.notificationapp.sevice | NotificationFactory | 通知方法に応じて通知処理クラスのインスタンスを生成するクラス |
+| com.example.notificationapp.sevice | NotificationService | 通知を実行するサービス層 |
+| com.example.notificationapp.sevice | NotificationHistoryRepository | 通知履歴を保存するレポジトリ層。本課題においてはメモリ上に保持するのみ。 |
+| com.example.notificationapp | Main | メイン関数 |
+
 ### ■ シーケンス図
 
 ---
@@ -76,28 +98,7 @@ java -jar target/notificationapp-1.0.0-SNAPSHOT.jar
 
 ---
 
-## 📡 4. API 仕様（モデル仕様）
-
-### NotificationRequest
-| フィールド | 型 | 説明 |
-|-----------|----|------|
-| channel | NotificationChannel | 通知チャネル（EMAIL, SMS, SLACK）|
-| to | ContactInfo | 値オブジェクト（メール、電話番号などを格納） |
-| message | String | 送信したいメッセージ |
-
----
-
-### NotificationHistory
-| フィールド | 型 | 説明 |
-|-----------|----|------|
-| request | NotificationRequest | 元リクエスト |
-| status | NotificationStatus | 成否（SUCCESS / FAILURE） |
-| timestamp | LocalDateTime | 実行時刻 |
-| errorMessage | String | エラー時のメッセージ |
-
----
-
-## 🔌 5. 実装される通知チャネル
+## 🔌 4. 実装される通知チャネル
 
 ### 1. EmailNotificationService
 - メールアドレスをバリデーション
@@ -113,7 +114,7 @@ java -jar target/notificationapp-1.0.0-SNAPSHOT.jar
 
 ---
 
-## 🧪 6. 動作例（標準出力）
+## 🧪 5. 動作例（標準出力）
 ```
 === Notification App ===
 [Email] Sent to user@example.com
@@ -124,7 +125,7 @@ java -jar target/notificationapp-1.0.0-SNAPSHOT.jar
 
 ---
 
-## 🚀 7. 拡張案（課題提出後に実施可能）
+## 🚀 6. 拡張案（課題提出後に実施可能）
 
 ### 機能拡張
 - Push / LINE / Teams などのチャネル追加
@@ -148,13 +149,13 @@ java -jar target/notificationapp-1.0.0-SNAPSHOT.jar
 
 ---
 
-## 📄 8. 課題手順
+## 📄 7. 課題手順
 
 課題を実施する順番は
 docs/task-order.md を参照してください。
 
 ---
 
-## 📘 9. ライセンス
+## 📘 8. ライセンス
 
 MIT License

@@ -9,7 +9,7 @@
 
 1. Maven プロジェクトを作成  
 2. `com.example.notificationapp` をルートパッケージとして作成  
-3. `model`, `service`, `factory`, `validator` の各サブパッケージを作成  
+3. `model`, `service`, `notification` の各サブパッケージを作成  
 4. `Main` クラスを空で配置
 
 ---
@@ -22,9 +22,23 @@
 ## 1-2. NotificationStatus（enum）
 - SUCCESS / FAILURE を定義
 
-## 1-3. ContactInfo（値オブジェクト）
-- “メール or 電話番号 or Slack ID“ を一つの型で表現
-- 不変オブジェクトとして実装
+## 1-3. Recipient
+インタフェースを作成
+
+### EmailRecipient
+
+- コンストラクタでメール形式チェック（@ を含む等の簡易チェックで可）。不正な値のとき IllegalArgumentException を投げる。
+- asString() はメールアドレスを返す。
+
+### SmsRecipient
+
+- コンストラクタで電話番号形式チェック（数字のみ、長さチェック等の簡易版）。不正な値のとき IllegalArgumentException を投げる。
+- asString()は電話番号を返す。
+
+### AppUserRecipient
+
+- コンストラクタでアプリ内ユーザーID（文字列）の簡易チェック（空でない等）。不正な値のとき IllegalArgumentException を投げる。
+- asString()はユーザーIDを返す。
 
 ## 1-4. NotificationRequest（エンティティ）
 - channel（NotificationChannel）
@@ -84,15 +98,6 @@ Spring Framework の DI と親和性が高い実装ポイント。
 
 - `mvn compile exec:java` で実行
 - すべてのチャネルで期待通りの結果が出力されることを確認
-
----
-
-# 🎉 Step 7 — 任意課題（さらに学びたい人向け）
-
-- Validator の共通抽象クラス化
-- チャネル追加（Push、Line、Teams、Webhook など）
-- Main クラスを CLI / JSON 入力に対応
-- Factory の差し替え（抽象工場パターン）
 
 ---
 
