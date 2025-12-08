@@ -23,7 +23,6 @@
 - SUCCESS / FAILURE を定義
 
 ## 1-3. Recipient
-インタフェースを作成
 
 ### EmailRecipient
 
@@ -35,62 +34,70 @@
 - コンストラクタで電話番号形式チェック（数字のみ、長さチェック等の簡易版）。不正な値のとき IllegalArgumentException を投げる。
 - asString()は電話番号を返す。
 
-### AppUserRecipient
+### SlackRecipient
 
-- コンストラクタでアプリ内ユーザーID（文字列）の簡易チェック（空でない等）。不正な値のとき IllegalArgumentException を投げる。
+- コンストラクタでSlackユーザーID（文字列）の簡易チェック（空でない等）。不正な値のとき IllegalArgumentException を投げる。
 - asString()はユーザーIDを返す。
 
 ## 1-4. NotificationRequest（エンティティ）
-- channel（NotificationChannel）
-- to（ContactInfo）
-- message（String）
-- コンストラクタで不正値チェック
 
 ## 1-5. NotificationHistory（エンティティ）
-- リクエスト + 結果 + タイムスタンプを保持
 
 ---
 
-# ⚙️ Step 2 — バリデーション層の実装
+# 🔌 Step 3 — 通知処理（notificationパッケージ）の実装
 
-## 2-1. NotificationValidator（interface）
-- `boolean isValid(ContactInfo info)` を定義
+## 3-1 Notification インタフェース
 
-## 2-2. EmailValidator  
-## 2-3. SmsValidator  
-## 2-4. SlackValidator  
-- 各チャネル固有のバリデーションを実装
+## 3-2 AbstractNotification
+- 通知履歴を登録する `createHistory()` を実装する。
 
----
+## 3-2 EmailNotification
+- メール送信処理を実装
+- 本課題ではダミー実装として、下記の文字列を出力
+  ```text
+  [Email] Sent to user@example.com: "Hello!"
+  ```
+- 通知履歴を登録する。
 
-# 🔌 Step 3 — サービス層の実装（ポリモーフィズムの中心）
+## 3-3 SmsNotification
+- SMSへの送信処理を実装
+- 本課題ではダミー実装として、下記の文字列を出力
+  ```text
+  [SMS] Sent to 09012345678: "Hello!"
+  ```
+- 通知履歴を登録する。
 
-## 3-1 NotificationService（interface）
-- `NotificationHistory send(NotificationRequest request)` を定義
-
-## 3-2 EmailNotificationService  
-## 3-3 SmsNotificationService  
-## 3-4 SlackNotificationService  
-- チャネルごとに異なる送信処理を実装  
-- Validator を内部で使用
+## 3-4 SlackNotification
+- Slackへの送信処理を実装
+- 本課題ではダミー実装として、下記の文字列を出力
+  ```text
+  [Slack] Sent to U000999: "Hello!"
+  ```
+- 通知履歴を登録する。
 
 ---
 
 # 🏭 Step 4 — ファクトリ層の実装
 
-## 4-1 NotificationServiceFactory
-- NotificationChannel に応じて  
-  **適切な NotificationService インスタンスを返す**
+## 4-1 NotificationFactory
+- NotificationChannel に応じて**適切な Notification インスタンスを返す**
 
 Spring Framework の DI と親和性が高い実装ポイント。
 
 ---
 
+# 🔌 Step 3 — サービス層の実装（ポリモーフィズムの中心）
+
+## 3-1 NotificationService
+- `NotificationHistory send(NotificationRequest request)` を定義
+
+---
+
 # ▶️ Step 5 — Main クラスを完成させる
 
-- NotificationRequest を複数生成
-- Factory から Service を取得
-- send() を呼び、結果を標準出力へ表示
+- NotificationRequest を生成
+- NotificationService.send() を呼び、結果を標準出力へ表示
 
 ---
 

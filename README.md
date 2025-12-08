@@ -33,12 +33,12 @@
 | com.example.notificationapp.notification | AbstractNotification | 各種通知処理の共通処理を持つ抽象クラス |
 | com.example.notificationapp.notification | EmailNotification | 通知処理（メール） |
 | com.example.notificationapp.notification | SmsNotification | 通知処理（SMS） |
-| com.example.notificationapp.notification | InAppNotification | 通知処理（アプリ通知） |
+| com.example.notificationapp.notification | SlackNotification | 通知処理（アプリ通知） |
 | com.example.notificationapp.model | NotificationRequest | 通知内容（宛先、内容）を保持するDTO |
 | com.example.notificationapp.model | Recipient | 各種通知処理の宛先を表すスーパークラス |
 | com.example.notificationapp.model | EmailRecipient | メール通知処理の宛先を表すクラス |
 | com.example.notificationapp.model | SmsRecipient | SMS通知処理の宛先を表すクラス |
-| com.example.notificationapp.model | AppUserRecipient | アプリ通知処理の宛先を表すクラス |
+| com.example.notificationapp.model | SlackRecipient | Slack通知処理の宛先を表すクラス |
 | com.example.notificationapp.model | NotificationChannel | 通知処理方式の列挙型 |
 | com.example.notificationapp.model | NotificationStatus | 通知処理結果の列挙型 |
 | com.example.notificationapp.model | NotificationHistory | 通知履歴を保持するDTO |
@@ -48,6 +48,8 @@
 | com.example.notificationapp | Main | メイン関数 |
 
 ### ■ シーケンス図
+
+![シーケンス図](./docs/fig/sequence_diagram.svg)
 
 ---
 
@@ -98,29 +100,19 @@ java -jar target/notificationapp-1.0.0-SNAPSHOT.jar
 
 ---
 
-## 🔌 4. 実装される通知チャネル
-
-### 1. EmailNotificationService
-- メールアドレスをバリデーション
-- 実行成功時は「メール送信」と出力（実際の送信は行わない）
-
-### 2. SmsNotificationService
-- 電話番号をバリデーション
-- 成功時に「SMS送信」と出力
-
-### 3. SlackNotificationService
-- Slack用ユーザー ID をチェック
-- 成功時に「Slack送信」と出力
-
----
-
 ## 🧪 5. 動作例（標準出力）
 ```
-=== Notification App ===
+=== Start Notification App ===
 [Email] Sent to user@example.com
 : "Hello!"
 [SMS] Sent to 09012345678: "Hello!"
 [Slack] Sent to U000999: "Hello!"
+
+*** Notification History
+2025/12/01 08:39:15 [Email] user@example.com "Hello!"
+2025/12/01 08:40:02 [SMS] 09012345678 "Hello!"
+2025/12/01 08:40:03 [Slack] U000999 "Hello!"
+=== End Notification App ===
 ```
 
 ---
@@ -153,9 +145,3 @@ java -jar target/notificationapp-1.0.0-SNAPSHOT.jar
 
 課題を実施する順番は
 docs/task-order.md を参照してください。
-
----
-
-## 📘 8. ライセンス
-
-MIT License

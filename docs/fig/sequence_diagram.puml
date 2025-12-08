@@ -6,7 +6,8 @@ participant NotificationFactory
 participant EmailNotification
 participant NotificationHistoryRepository
 
-User -> Main: create NotificationRequest (EmailRecipient, message, EMAIL)
+User -> Main: Execute
+Main -> Main: create NotificationRequest (EmailAddress, "some message", EMAIL)
 Main -> NotificationService: send(request)
 NotificationService -> NotificationFactory: create(EMAIL)
 NotificationFactory --> NotificationService: EmailNotification instance

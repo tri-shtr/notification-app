@@ -20,14 +20,14 @@ package com {
             interface Recipient {
                 + asString(): String
             }
-            class EmailRecipient
-            class SmsRecipient
-            class AppUserRecipient
+            class EmailAddress
+            class PhoneNumber
+            class SlackUserID
 
             enum NotificationChannel {
                 EMAIL
                 SMS
-                APP
+                SLACK
             }
 
             class NotificationHistory {
@@ -56,7 +56,7 @@ package com {
 
             class EmailNotification
             class SmsNotification
-            class InAppNotification
+            class SlackNotification
 
         }
 
@@ -86,14 +86,14 @@ package com {
 }
 
 com.example.notificationapp.model.NotificationRequest --> com.example.notificationapp.model.Recipient
-com.example.notificationapp.model.Recipient <|.. com.example.notificationapp.model.EmailRecipient
-com.example.notificationapp.model.Recipient <|.. com.example.notificationapp.model.SmsRecipient
-com.example.notificationapp.model.Recipient <|.. com.example.notificationapp.model.AppUserRecipient
+com.example.notificationapp.model.Recipient <|.. com.example.notificationapp.model.EmailAddress
+com.example.notificationapp.model.Recipient <|.. com.example.notificationapp.model.PhoneNumber
+com.example.notificationapp.model.Recipient <|.. com.example.notificationapp.model.SlackUserID
 
 com.example.notificationapp.notification.Notification <|.. com.example.notificationapp.notification.AbstractNotification
 com.example.notificationapp.notification.AbstractNotification <|-- com.example.notificationapp.notification.EmailNotification
 com.example.notificationapp.notification.AbstractNotification <|-- com.example.notificationapp.notification.SmsNotification
-com.example.notificationapp.notification.AbstractNotification <|-- com.example.notificationapp.notification.InAppNotification
+com.example.notificationapp.notification.AbstractNotification <|-- com.example.notificationapp.notification.SlackNotification
 
 com.example.notificationapp.service.NotificationService --> com.example.notificationapp.service.NotificationFactory
 com.example.notificationapp.service.NotificationService --> com.example.notificationapp.service.NotificationHistoryRepository
