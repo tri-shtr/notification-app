@@ -55,22 +55,25 @@
 
 ## 📁 2. ディレクトリ構造
 ```
-src/
-└─ main/
-├─ java/com/example/notificationapp/
-│ ├─ model/
-│ ├─ service/
-│ ├─ factory/
-│ ├─ validator/
-│ └─ Main.java
-└─ resources/
-pom.xml
-README.md
-docs/
-└─ task-order.md
++-- docs
+|    +-- task-order.md
+|
++-- src
+|    +-- main
+|    |    +-- java/com/example/notificationapp
+|    |    |    +-- model
+|    |    |    +-- service
+|    |    |    +-- notification
+|    |    |    +-- Main.java
+|    |    +-- resources
+|    |
+|    +-- test
+|         +-- java
+|         +-- resources
+|
++-- pom.xml
++-- README.md
 ```
-
-
 ---
 
 ## ▶️ 3. 実行方法
