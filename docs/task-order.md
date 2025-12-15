@@ -24,17 +24,17 @@
 
 ## 1-3. Recipient
 
-### EmailRecipient
+### EmailAddress
 
 - コンストラクタでメール形式チェック（@ を含む等の簡易チェックで可）。不正な値のとき IllegalArgumentException を投げる。
 - asString() はメールアドレスを返す。
 
-### SmsRecipient
+### PhoneNumber
 
 - コンストラクタで電話番号形式チェック（数字のみ、長さチェック等の簡易版）。不正な値のとき IllegalArgumentException を投げる。
 - asString()は電話番号を返す。
 
-### SlackRecipient
+### SlackUserID
 
 - コンストラクタでSlackユーザーID（文字列）の簡易チェック（空でない等）。不正な値のとき IllegalArgumentException を投げる。
 - asString()はユーザーIDを返す。

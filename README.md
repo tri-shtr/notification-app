@@ -36,9 +36,9 @@
 | com.example.notificationapp.notification | SlackNotification | 通知処理（アプリ通知） |
 | com.example.notificationapp.model | NotificationRequest | 通知内容（宛先、内容）を保持するDTO |
 | com.example.notificationapp.model | Recipient | 各種通知処理の宛先を表すスーパークラス |
-| com.example.notificationapp.model | EmailRecipient | メール通知処理の宛先を表すクラス |
-| com.example.notificationapp.model | SmsRecipient | SMS通知処理の宛先を表すクラス |
-| com.example.notificationapp.model | SlackRecipient | Slack通知処理の宛先を表すクラス |
+| com.example.notificationapp.model | EmailAddress | メール通知処理の宛先を表すクラス |
+| com.example.notificationapp.model | PhoneNumber | SMS通知処理の宛先を表すクラス |
+| com.example.notificationapp.model | SlackUserID | Slack通知処理の宛先を表すクラス |
 | com.example.notificationapp.model | NotificationChannel | 通知処理方式の列挙型 |
 | com.example.notificationapp.model | NotificationStatus | 通知処理結果の列挙型 |
 | com.example.notificationapp.model | NotificationHistory | 通知履歴を保持するDTO |
