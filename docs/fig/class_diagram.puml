@@ -68,7 +68,7 @@ package com {
             class NotificationService {
                 - NotificationFactory factory
                 - NotificationHistoryRepository repo
-                + NotificationHistory send(NotificationRequest req)
+                + void send(NotificationRequest req)
             }
 
             class NotificationHistoryRepository {
