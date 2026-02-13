@@ -1,0 +1,105 @@
+@startuml
+package com {
+  package example {
+    package notificationapp {
+
+        class Main {
+        {static} + main(): void
+        }
+
+        package model {
+            class NotificationRequest {
+                - Recipient recipient
+                - String message
+                - NotificationChannel channel
+                + getRecipient(): Recipient
+                + getMessage(): String
+                + getChannel(): NotificationChannel
+            }
+
+            interface Recipient {
+                + asString(): String
+            }
+            class EmailAddress
+            class PhoneNumber
+            class SlackUserID
+
+            enum NotificationChannel {
+                EMAIL
+                SMS
+                SLACK
+            }
+
+            class NotificationHistory {
+                - Recipient recipient
+                - String message
+                - NotificationChannel channel
+                - NotificationStatus status
+                - java.time.LocalDateTime sentAt
+                + getters...
+            }
+
+            enum NotificationStatus {
+                SUCCESS
+                FAILURE
+            }
+        }
+
+        package notification {
+            interface Notification {
+                + NotificationHistory send(NotificationRequest req)
+            }
+
+            abstract class AbstractNotification {
+                # NotificationHistory createHistory(NotificationRequest req, NotificationStatus status)
+            }
+
+            class EmailNotification
+            class SmsNotification
+            class SlackNotification
+
+        }
+
+        package service {
+            class NotificationFactory {
+                + Notification create(NotificationChannel channel)
+            }
+
+            class NotificationService {
+                - NotificationFactory factory
+                - NotificationHistoryRepository repo
+                + void send(NotificationRequest req)
+            }
+
+            class NotificationHistoryRepository {
+                - java.util.List<NotificationHistory> store
+                + void add(NotificationHistory h)
+                + List<NotificationHistory> findAll()
+            }
+        }
+
+    }
+
+
+  }
+
+}
+
+com.example.notificationapp.model.NotificationRequest --> com.example.notificationapp.model.Recipient
+com.example.notificationapp.model.Recipient <|.. com.example.notificationapp.model.EmailAddress
+com.example.notificationapp.model.Recipient <|.. com.example.notificationapp.model.PhoneNumber
+com.example.notificationapp.model.Recipient <|.. com.example.notificationapp.model.SlackUserID
+
+com.example.notificationapp.notification.Notification <|.. com.example.notificationapp.notification.AbstractNotification
+com.example.notificationapp.notification.AbstractNotification <|-- com.example.notificationapp.notification.EmailNotification
+com.example.notificationapp.notification.AbstractNotification <|-- com.example.notificationapp.notification.SmsNotification
+com.example.notificationapp.notification.AbstractNotification <|-- com.example.notificationapp.notification.SlackNotification
+
+com.example.notificationapp.service.NotificationService --> com.example.notificationapp.service.NotificationFactory
+com.example.notificationapp.service.NotificationService --> com.example.notificationapp.service.NotificationHistoryRepository
+com.example.notificationapp.service.NotificationFactory ..> com.example.notificationapp.notification.Notification
+com.example.notificationapp.notification.Notification --> com.example.notificationapp.model.NotificationHistory
+
+com.example.notificationapp.model.NotificationHistory --> com.example.notificationapp.model.NotificationStatus
+com.example.notificationapp.model.NotificationRequest --> com.example.notificationapp.model.NotificationChannel
+@enduml

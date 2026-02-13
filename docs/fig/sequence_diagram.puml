@@ -1,0 +1,44 @@
+@startuml sequence_diagram
+actor User #ffcccc
+participant Main
+participant NotificationService
+participant NotificationFactory
+participant EmailNotification
+participant NotificationHistoryRepository
+boundary Console #ffcccc
+
+User -> Main: Execute
+activate Main
+Main -> Main
+note right
+  create some instance
+  - NotificationRequest
+  - NotificationHistoryRepository
+end note
+Main -> NotificationService: send(request)
+activate NotificationService
+NotificationService -> NotificationFactory: create(EMAIL)
+activate NotificationFactory
+NotificationFactory --> NotificationService: EmailNotification instance
+deactivate NotificationFactory
+NotificationService -> EmailNotification: send(request)
+activate EmailNotification
+EmailNotification -> Console: print "Send Email to: user@example.com - body: ..."
+EmailNotification -> EmailNotification: createHistory(request)
+activate EmailNotification
+EmailNotification -> NotificationHistoryRepository: add(history)
+activate NotificationHistoryRepository
+deactivate NotificationHistoryRepository
+deactivate EmailNotification
+EmailNotification --> NotificationService
+deactivate EmailNotification
+NotificationService --> Main: void
+deactivate NotificationService
+Main -> NotificationHistoryRepository: findAll()
+activate NotificationHistoryRepository
+NotificationHistoryRepository --> Main: List<NotificationHistory>
+deactivate NotificationHistoryRepository
+Main -> Console: print Notification histories
+
+Main --> User
+@enduml
